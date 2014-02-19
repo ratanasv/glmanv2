@@ -1,0 +1,21 @@
+{
+	"shaders": [
+		"C:/Users/ratanasv/Desktop/p0/p0.vert", 
+		"C:/Users/ratanasv/Desktop/p0/p0.frag"
+	],
+	"uniforms": [
+		{
+			"name": "uRed",
+			"minValue" : 0.1,
+			"maxValue" : 1.0,
+			"value": 0.5
+		},
+				{
+			"name": "uBlue",
+			"minValue" : 0.1,
+			"maxValue" : 1.0,
+			"value": 0.8
+		}
+
+	]
+}
