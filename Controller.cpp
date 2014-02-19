@@ -57,8 +57,18 @@ void initUniforms() {
 }
 
 void initModels() {
-	shared_ptr<GeometryAbstractFactory> cubeFactory(new CubeGeometryFactory());
-	shared_ptr<GeometryDelegatee> vaoFreeable(new VAODelegatee(cubeFactory, 
-		m_shader));
-	m_model.reset(new VirModel(vaoFreeable));
+	if (_doc.HasMember("model")) {
+		string pathToObj = _doc["model"].GetString();
+		shared_ptr<GeometryAbstractFactory> objFactory(new OBJFactory(pathToObj.c_str()));
+		shared_ptr<GeometryDelegatee> vao(new VAODelegatee(objFactory, 
+			m_shader));
+		m_model.reset(new VirModel(vao));
+		
+	} else { //defaults to cube
+		shared_ptr<GeometryAbstractFactory> cubeFactory(new CubeGeometryFactory());
+		shared_ptr<GeometryDelegatee> vao(new VAODelegatee(cubeFactory, 
+			m_shader));
+		m_model.reset(new VirModel(vao));
+	}
+	
 }

@@ -17,5 +17,13 @@
 			"value": 0.8
 		}
 
+	],
+	"model" : "C:/Users/ratanasv/Desktop/cat4.obj",
+	"textures" : [
+		{
+			"path" : "C:/Users/ratanasv/Desktop/noise.tex",
+			"name" : "uNoiseSampler"
+		}
+
 	]
 }
