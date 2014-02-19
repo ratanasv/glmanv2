@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <memory>
 
 
 struct Uniform {
@@ -17,11 +18,13 @@ struct Uniform {
 };
 
 class GLSLProgram;
+class VirModel;
 
 extern float m_xRot;
 extern float m_yRot;
 extern float m_xMouse;
 extern float m_yMouse;
 extern float m_zTranslate;
-extern GLSLProgram* m_shader;
+extern std::shared_ptr<GLSLProgram> m_shader;
 extern std::map<std::string, Uniform> m_Uniforms;
+extern std::shared_ptr<VirModel> m_model;

@@ -6,6 +6,7 @@
 #include <memory>
 #include "Controller.h"
 #include "Model.h"
+#include "virmodel.h"
 
 using namespace std;
 
@@ -34,13 +35,9 @@ void Draw(const int width, const int height) {
 	m_shader->Rotate(m_xRot, m_yRot, 0.0);
 
 	m_shader->ClearProjection();
-	m_shader->Perspective( 90., 1.,	0.1, 100. );
+	m_shader->Perspective( 90., (float)width/(float)height,	0.1, 100. );
 
-	glBegin(GL_TRIANGLES);
-		glVertex3f(-1.0, -1.0, 0.0);
-		glVertex3f(1.0, -1.0, 0.0);
-		glVertex3f(0.0, 1.0, 0.0);
-	glEnd();
+	m_model->render();
 }
 
 

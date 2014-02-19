@@ -5,6 +5,7 @@
 #include "vir_toolbox.hpp"
 #include "glslprogram.h"
 #include "Controller.h"
+#include "virmodel.h"
 
 using namespace std;
 
@@ -24,7 +25,7 @@ string ReadFileContent(const string& fileName) {
 }
 
 void initShader(const string& jsonFile) {
-	m_shader = new GLSLProgram();
+	m_shader.reset(new GLSLProgram());
 	using namespace rapidjson;
 	auto jsonString = ReadFileContent(jsonFile);
 	if (!_doc.Parse<0>(jsonString.c_str()).HasParseError()) {
@@ -53,4 +54,11 @@ void initUniforms() {
 		auto value = uniforms[i]["value"].GetDouble();
 		m_Uniforms[name] = Uniform(name, min, max, value);
 	}
+}
+
+void initModels() {
+	shared_ptr<GeometryAbstractFactory> cubeFactory(new CubeGeometryFactory());
+	shared_ptr<GeometryDelegatee> vaoFreeable(new VAODelegatee(cubeFactory, 
+		m_shader));
+	m_model.reset(new VirModel(vaoFreeable));
 }

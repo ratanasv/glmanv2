@@ -36,7 +36,7 @@ void GLFrame::OnCanvasMotion(wxMouseEvent& event) {
 	int dy = event.m_y - m_yMouse;
 	if (event.LeftIsDown()) {
 		m_xRot += ( ANGFACT*dy );
-		m_xRot += ( ANGFACT*dx );
+		m_yRot += ( ANGFACT*dx );
 
 
 	} else if (event.MiddleIsDown()) {

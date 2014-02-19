@@ -11,6 +11,7 @@ bool App::OnInit() {
 	_frame->Show( true );
 	initShader("vir.json");
 	initUniforms();
+	initModels();
 	ControlFrame* controlFrame = new ControlFrame();
 	controlFrame->Show( true );
 	_eventTimer = new wxTimer(this, kEventTimerId);
