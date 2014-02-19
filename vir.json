@@ -21,7 +21,7 @@
 	"model" : "C:/Users/ratanasv/Desktop/cat4.obj",
 	"textures" : [
 		{
-			"path" : "C:/Users/ratanasv/Desktop/noise.tex",
+			"path" : "C:/Users/ratanasv/Desktop/noise2d.tex",
 			"name" : "uNoiseSampler"
 		}
 

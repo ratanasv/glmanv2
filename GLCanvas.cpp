@@ -7,6 +7,7 @@
 #include "Controller.h"
 #include "Model.h"
 #include "virmodel.h"
+#include "virtex.h"
 
 using namespace std;
 
@@ -26,6 +27,11 @@ void Draw(const int width, const int height) {
 	m_shader->Use();
 	for (auto it : m_Uniforms) {
 		m_shader->SetUniform(it.second._name, it.second._value);
+	}
+	for (auto it : m_textures) {
+		shared_ptr<GLSLTextureSamplerBinder> binder(new GLSLTextureSamplerBinder(
+			m_shader, it._name));
+		it._glTexture->pre_render(binder);
 	}
 
 	m_shader->ClearModelView();

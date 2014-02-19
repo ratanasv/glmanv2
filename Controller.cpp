@@ -6,8 +6,10 @@
 #include "glslprogram.h"
 #include "Controller.h"
 #include "virmodel.h"
+#include "virtex.h"
 
 using namespace std;
+using namespace rapidjson;
 
 static rapidjson::Document _doc;
 
@@ -71,4 +73,20 @@ void initModels() {
 		m_model.reset(new VirModel(vao));
 	}
 	
+}
+
+void initTextures() {
+	if (_doc.HasMember("textures")) {
+		const Value& textures = _doc["textures"];
+		const int numTextures = textures.Size();
+		for (int i=0; i<numTextures; i++) {
+			const Value& texture = textures[i];
+			shared_ptr<TextureData> factory(new BinaryTexture2DData(
+				texture["path"].GetString()));
+			shared_ptr<GLTexture> glTexture(new GLTexture(factory));
+			m_textures.push_back(Texture(texture["name"].GetString(), glTexture));
+		}
+	} else { 
+		//nothing
+	}
 }

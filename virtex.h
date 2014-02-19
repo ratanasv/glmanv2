@@ -56,6 +56,28 @@ public:
 
 };
 
+class BinaryTexture2DData : public TextureData {
+public:
+	explicit BinaryTexture2DData(const string& fileName);
+
+	virtual GLenum getInternalFormat();
+
+	virtual int getWidth();
+
+	virtual int getHeight();
+
+	virtual int getDepth();
+
+	virtual GLenum getFormat();
+
+	virtual GLenum getType();
+
+	virtual shared_ptr<const void> get_data();
+private:
+	std::shared_ptr<const void> _data;
+
+};
+
 class GLTexture {
 public:
 	GLTexture(const shared_ptr<TextureData>& factory);
@@ -69,4 +91,18 @@ protected:
 	boost::shared_mutex _mutex;
 private:
 	static atomic_uint OGLActiveTextureCounter;
+};
+
+class GLSLUniformBinder;
+
+class GLSLTextureSamplerBinder : public TextureVisitor {
+private:
+	const shared_ptr<GLSLUniformBinder> _binder;
+	const string _uniformVariable;
+public:
+	GLSLTextureSamplerBinder(const shared_ptr<GLSLUniformBinder>& binder, 
+		const string& uniformVariable);
+	virtual void PreRender( const unsigned int whichTex, GLenum bindSite, 
+		const shared_ptr<unsigned> texHandle );
+
 };

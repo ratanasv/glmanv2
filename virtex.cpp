@@ -3,6 +3,7 @@
 #include <boost/filesystem.hpp>
 #include "SOIL.h"
 #include "vir_toolbox.hpp"
+#include "glslprogram.h"
 
 using std::shared_ptr;
 using std::invalid_argument;
@@ -139,4 +140,59 @@ void GLTexture::post_render() {
 	boost::shared_lock<boost::shared_mutex> synchronous(_mutex);
 	glActiveTexture(GL_TEXTURE0+_which_tex);
 	glBindTexture(_bind_site, 0);
+}
+
+BinaryTexture2DData::BinaryTexture2DData(const string& fileName) {
+	FILE* noise2d_file = fopen(fileName.c_str(), "rb");
+	fseek( noise2d_file, 0, SEEK_END );
+	int length = ftell( noise2d_file );
+	fseek( noise2d_file, 0, SEEK_SET );		// rewind
+	int num_unsigned_chars = length/sizeof(unsigned char);
+	auto noise2d = initCStyleArray(new unsigned char[num_unsigned_chars]);
+	fread(noise2d.get(), sizeof(unsigned char), num_unsigned_chars, 
+		noise2d_file);
+	_data = noise2d;
+}
+
+GLenum BinaryTexture2DData::getInternalFormat() {
+	return GL_RGBA;
+}
+
+int BinaryTexture2DData::getWidth() {
+	return 400;
+}
+
+int BinaryTexture2DData::getHeight() {
+	return 400;
+}
+
+int BinaryTexture2DData::getDepth() {
+	return 1;
+}
+
+GLenum BinaryTexture2DData::getFormat() {
+	return GL_RGBA;
+}
+
+GLenum BinaryTexture2DData::getType() {
+	return GL_UNSIGNED_BYTE;
+}
+
+shared_ptr<const void> BinaryTexture2DData::get_data() {
+	return _data;
+}
+
+GLSLTextureSamplerBinder::GLSLTextureSamplerBinder(
+	const shared_ptr<GLSLUniformBinder>& binder, const string& uniformVariable) : 
+_binder(binder), _uniformVariable(uniformVariable)
+{
+
+}
+
+void GLSLTextureSamplerBinder::PreRender( const unsigned int whichTex, 
+										 GLenum bindSite, const shared_ptr<unsigned> texHandle )
+{
+	glTexParameteri( bindSite, GL_TEXTURE_MAG_FILTER, GL_LINEAR ); 
+	glTexParameteri( bindSite, GL_TEXTURE_MIN_FILTER, GL_LINEAR ); 
+	_binder->SetUniform(_uniformVariable, (int)whichTex);
 }
