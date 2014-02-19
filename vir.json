@@ -10,15 +10,15 @@
 			"maxValue" : 1.0,
 			"value": 0.5
 		},
-				{
-			"name": "uBlue",
-			"minValue" : 0.1,
+		{
+			"name": "uAlpha",
+			"minValue" : 0.0,
 			"maxValue" : 1.0,
 			"value": 0.8
 		}
 
 	],
-	"model" : "C:/Users/ratanasv/Desktop/cat4.obj",
+	"model" : "C:/Users/ratanasv/Desktop/teapot.obj",
 	"textures" : [
 		{
 			"path" : "C:/Users/ratanasv/Desktop/noise2d.tex",

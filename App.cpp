@@ -9,7 +9,7 @@ IMPLEMENT_APP(App)
 bool App::OnInit() {
 	_frame = new GLFrame( "Hello World", wxPoint(50, 50), wxSize(1024, 768) );
 	_frame->Show( true );
-	initShader("vir.json");
+	initShader("E:/Vault/glmanv2/vir.json");
 	initUniforms();
 	initModels();
 	initTextures();
