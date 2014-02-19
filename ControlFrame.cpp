@@ -12,7 +12,7 @@ ControlFrame::ControlFrame() :
 
 	for (auto uniform : m_Uniforms) {
 		SliderWithID* slider = new SliderWithID(this, uniform.second._name);
-		bigSizer->Add(slider, 1, wxEXPAND);
+		bigSizer->Add(slider, 0, wxEXPAND);
 	}
 	
 	SetSizer(bigSizer);
@@ -35,21 +35,28 @@ SliderWithID::SliderWithID(wxWindow* parent, const string& id) :
 {
 	const float defaultValue = ToImaginary(_id, m_Uniforms[_id]._value);
 	_slider = new wxSlider(this, wxID_ANY, defaultValue, 0, 100);
-	_sizer = new wxBoxSizer(wxHORIZONTAL);
+	_sizer = new wxBoxSizer(wxVERTICAL);
 
-	_value = new wxTextCtrl(this, wxID_ANY, m_Uniforms[_id]._name, 
+	_text = new wxStaticText(this, wxID_ANY, _id);
+	_sizer->Add(_text, 0, wxEXPAND);
+
+	wxSizer* miniSizer = new wxBoxSizer(wxHORIZONTAL);
+
+	_valueString = new wxTextCtrl(this, wxID_ANY, vvprintf("%f", m_Uniforms[_id]._value), 
 		wxDefaultPosition, wxSize(40, 20), wxTE_PROCESS_ENTER);
 
-	_sizer->Add(_slider, 2, wxEXPAND);
-	_sizer->Add(_value, 1);
+	miniSizer->Add(_slider, 2, wxEXPAND);
+	miniSizer->Add(_valueString, 1, wxEXPAND);
 
 	_slider->Connect(wxEVT_SCROLL_THUMBTRACK , 
 		wxScrollEventHandler(SliderWithID::OnScroll), NULL, this);
+
+	_sizer->Add(miniSizer, 0, wxEXPAND);
 
 	SetSizer(_sizer);
 }
 
 void SliderWithID::OnScroll(wxScrollEvent& event) {
 	m_Uniforms[_id]._value = ToReal(_id, _slider->GetValue());
-	_value->SetValue(vvprintf("%f", m_Uniforms[_id]._value));
+	_valueString->SetValue(vvprintf("%f", m_Uniforms[_id]._value));
 }

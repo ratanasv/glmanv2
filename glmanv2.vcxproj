@@ -190,6 +190,7 @@
     <ClCompile Include="GLFrame.cpp" />
     <ClCompile Include="glslprogram.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="virmodel.cpp" />
     <ClCompile Include="vir_toolbox.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +201,7 @@
     <ClInclude Include="GLFrame.h" />
     <ClInclude Include="glslprogram.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="virmodel.h" />
     <ClInclude Include="vir_toolbox.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
